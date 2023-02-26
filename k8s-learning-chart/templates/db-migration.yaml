@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration-job
+spec:
+  template:
+    metadata:
+      name: db-migration
+      labels:
+        app: db-migration
+    spec:
+      containers:
+        - name: prisma-migrate
+          image: {{ .Values.dbMigrationImage }}
+          # same env as the applications
+          # todo, think of a way to group them together
+          env:
+            - name: MYSQL_URL
+              value: mysql-service
+            - name: MYSQL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: USERNAME
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: DATABASE
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: USER_PASSWORD
+            - name: DATABASE_URL
+              value: mysql://$(MYSQL_USERNAME):$(MYSQL_PASSWORD)@mysql-service/$(MYSQL_DATABASE)
+      initContainers:
+        - name: wait-db
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup mysql-service; do echo waiting for myservice; sleep 2; done"]
+      restartPolicy: Never
+  backoffLimit: 4
