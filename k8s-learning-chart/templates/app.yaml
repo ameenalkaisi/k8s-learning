@@ -42,7 +42,7 @@ spec:
                 configMapKeyRef:
                   name: mysql-config
                   key: USERNAME
-            - name: MYSQL_DATABSE
+            - name: MYSQL_DATABASE
               valueFrom:
                 configMapKeyRef:
                   name: mysql-config
@@ -56,3 +56,19 @@ spec:
               value: mysql://$(MYSQL_USERNAME):$(MYSQL_PASSWORD)@mysql-service/$(MYSQL_DATABASE)
           ports:
             - containerPort: 3000
+      # todo: not super important, but, tyr to automate the db-migration job so that it runs
+      # every time one of the pods restart
+      # initContainers:
+      #   # 1. Wait on Migration job first
+      #   - name: db-migration-start
+      #     image: busybox:1.28
+      #     command: ["sh", "-c", "for i in {1..100}; do sleep 1; if dig db-migration-service; then exit 0; fi; done; exit 1"]
+      #   # 2. Wait for it to finish
+      #   - name: db-migration-end
+      #     image: busybox:1.28
+      #     command:
+      #       [
+      #         "sh",
+      #         "-c",
+      #         "for i in {1..100}; do sleep 1; if ! dig db-migration-service; then exit 0; fi; done; exit 1",
+      #       ]
