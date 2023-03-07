@@ -37,6 +37,11 @@ spec:
       initContainers:
         - name: wait-db
           image: busybox:1.28
-          command: ['sh', '-c', "until nslookup mysql-service; do echo waiting for myservice; sleep 2; done"]
+          command:
+            [
+              "sh",
+              "-c",
+              "until nslookup mysql-service; do echo waiting for myservice; sleep 2; done",
+            ]
       restartPolicy: Never
   backoffLimit: 4
