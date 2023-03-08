@@ -1,11 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import * as bcrypt from "bcrypt";
 
 interface UserCreateRequest extends NextApiRequest {
   body: {
-    name: string;
     email: string;
+    password: string;
   };
 }
 
@@ -19,11 +20,10 @@ export default async function handler(
     console.log("noo");
   }
 
-  console.log(req.body.name);
   await prisma.user.create({
     data: {
-      name: req.body.name,
       email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 10),
     },
   });
 
