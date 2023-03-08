@@ -5,10 +5,25 @@ import axios, { AxiosError } from "axios";
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
-  useEffect(() => {
+  const submitInfo = async () => {
     axios
-      .get<{users: User[]}>("/api/hello")
+      .post("/api/users", {
+        email: userEmail,
+        name: name,
+      })
+      .then(() => {
+        setUserEmail("");
+        setName("");
+        updateUsers();
+      });
+  };
+
+  const updateUsers = () => {
+    axios
+      .get<{ users: User[] }>("/api/hello")
       .then((response) => {
         setUsers(response.data.users);
         console.log(JSON.stringify(response.data));
@@ -16,7 +31,9 @@ export default function Home() {
       .catch((err: AxiosError) => {
         console.log(err.toJSON());
       });
-  }, []);
+  };
+
+  useEffect(updateUsers, []);
 
   return (
     <>
@@ -27,12 +44,26 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <br />
+        <label>Enter e-mail</label>
+        <input
+          type="email"
+          onChange={(text) => setUserEmail(text.target.value)}
+          value={userEmail}
+        />
+        <label>Enter Name</label>
+        <input
+          type="text"
+          onChange={(text) => setName(text.target.value)}
+          value={name}
+        />
+        <button onClick={submitInfo}>Submit</button>
+
         <ul>
           {users.map((user, i) => (
             <li key={i}>
-              <p>{user.id}</p>
-              <p>{user.name}</p>
-              <p>{user.email}</p>
+              <br />
+              <p>{user.id} {user.name} {user.email}</p>
             </li>
           ))}
         </ul>
