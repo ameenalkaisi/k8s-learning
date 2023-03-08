@@ -64,7 +64,7 @@ export default function Home() {
             <li key={i}>
               <br />
               <p>
-                {user.id} {user.name} {user.email}
+                {i} {user.name} {user.email}
               </p>
             </li>
           ))}
