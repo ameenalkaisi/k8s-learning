@@ -63,7 +63,9 @@ export default function Home() {
           {users.map((user, i) => (
             <li key={i}>
               <br />
-              <p>{user.id} {user.name} {user.email}</p>
+              <p>
+                {user.id} {user.name} {user.email}
+              </p>
             </li>
           ))}
         </ul>
