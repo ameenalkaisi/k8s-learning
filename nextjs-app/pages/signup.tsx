@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 
 const SignUp = () => {
@@ -17,7 +17,10 @@ const SignUp = () => {
         setPw("");
         setHelpText("success");
       })
-      .catch(() => setHelpText("failure"));
+      .catch((err: AxiosError) => {
+        setHelpText("failure");
+        console.log(err.toJSON())
+      });
   };
 
   return (
