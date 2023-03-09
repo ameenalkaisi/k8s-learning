@@ -20,7 +20,6 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials, _req) {
         const prisma = new PrismaClient();
 
@@ -51,5 +50,6 @@ export const authOptions: NextAuthOptions = {
   // I think Prisma would only be used when using an external provider (not credential), for credential only jwt would work I guess
   // not sure
   session: { strategy: "jwt" },
+  secret: process.env.NEXTAUTH_SECRET
 };
 export default NextAuth(authOptions);

@@ -32,6 +32,16 @@ spec:
                 secretKeyRef:
                   name: mysecret
                   key: USER_PASSWORD
+            - name: NEXTAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: NEXTAUTH_SECRET
+            - name: NEXTAUTH_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: NEXTAUTH_URL
             - name: DATABASE_URL
               value: mysql://$(MYSQL_USERNAME):$(MYSQL_PASSWORD)@mysql-service/$(MYSQL_DATABASE)
       initContainers:
