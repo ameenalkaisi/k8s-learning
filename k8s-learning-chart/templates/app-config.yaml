@@ -3,4 +3,7 @@ kind: ConfigMap
 metadata:
   name: app-config
 data:
-  NEXTAUTH_URL: nextjs-app-service
+  # This is for minikube, 30004 will be assumed to be port forwarded
+  # I.e., when starting minikube, run "kubectl port-forward svc/nextjs-app-service 30004:3000"
+  # In production environment, this should be set to a domain name
+  NEXTAUTH_URL: http://localhost:30004
