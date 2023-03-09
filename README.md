@@ -6,6 +6,7 @@
 - helm installed
 - make installed "or copy the commands from make manually, replace port as you see it"
 - port 30004 opened
+- make sure MySQL windows service isn't running (I think 3306 port might need to be opened but haven't tested)
 
 1. Run minikube start
 2. Make sure registry addon is enable through
