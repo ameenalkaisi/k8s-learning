@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { User } from "@prisma/client";
 import axios, { AxiosError } from "axios";
+import Link from "next/link";
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
@@ -69,6 +70,14 @@ export default function Home() {
             </li>
           ))}
         </ul>
+
+        <Link href="/me">
+          Me page
+        </Link>
+
+        <Link href="/signup">
+          Account Creation
+        </Link>
       </main>
     </>
   );
