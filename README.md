@@ -1,4 +1,3 @@
-
 ## How to run on minikube on docker on Windows
 ### Prerequisites
 - minikube installed
