@@ -5,6 +5,9 @@ setup: check-env
 		"apk add socat && socat TCP-LISTEN:$(PORT),reuseaddr,fork TCP:host.docker.internal:$(PORT)" &
 	kubectl port-forward --namespace kube-system service/registry $(PORT):80 &
 
+make port-forward-app:
+	kubectl port-forward svc/nextjs-app-service 30004:3000
+
 setup-docker: check-env
 	docker run --rm -it --network=host alpine ash -c \
 		"apk add socat && socat TCP-LISTEN:$(PORT),reuseaddr,fork TCP:host.docker.internal:$(PORT)"
