@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const SignUp = () => {
@@ -42,6 +43,8 @@ const SignUp = () => {
         <button onClick={submitInfo}>Submit</button>
         <p>{helpText}</p>
       </div>
+
+      <Link href="/">Go back</Link>
     </>
   );
 };
