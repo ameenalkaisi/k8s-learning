@@ -44,5 +44,17 @@ In Windows, must run setup-docker and setup-kubectl instead of setup, also the b
 ## TODO
 
 - [x] fix "Internal Server Error" issue wth next-auth, look back to see what I did wrong
-- [ ] test, make sure that auth works with the same client when they are interacting with multiple servers (through load balancing)
-- [ ] fix db-migration job _sometimes_ breaking (half the times I deploy it breaks 4 times in a row saying can't authenticate)
+- [x] test, make sure that auth works with the same client when they are interacting with multiple servers (through load balancing)
+- [ ] set up logging and monitoring
+
+## Later
+- [ ] compact config, so that DATABASE_URL is exported on its own
+- [ ] make nextjs app look nicer
+- [ ] try to output the "infrastructure"-ness into the app
+
+## Long term todos
+- [ ] add Redis eventually -- try to make a reason to use it for practice
+	- redis server in the cluster, not accessible from outside
+	- JSON stringify values, and reverse when getting them
+	- if not present, look in database and save into Redis instance, if present return the value
+		- need some expiry on the caching
